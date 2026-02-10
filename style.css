@@ -1,0 +1,642 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:ital,wght@1,500&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
+
+        :root {
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --gold: linear-gradient(135deg, #d4af37 0%, #fdf6ba 45%, #b8860b 100%);
+            --purple-glow: rgba(180, 70, 255, 0.4);
+            --blue-glow: rgba(70, 130, 255, 0.4);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        /* --- HYPER-ANIMATED BACKGROUND --- */
+        body {
+            min-height: 100vh;
+            background: #050510;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff; 
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Animated nebula background */
+        .bg-layer {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--purple-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--blue-glow) 0%, transparent 50%);
+            animation: nebulaPulse 8s ease-in-out infinite alternate;
+        }
+
+        .stars {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 200%; 
+            height: 200%; 
+            z-index: -1;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.3;
+            animation: starRotate 200s linear infinite;
+        }
+
+        @keyframes nebulaPulse {
+            0% { 
+                filter: hue-rotate(0deg) brightness(1); 
+                transform: scale(1); 
+            }
+            100% { 
+                filter: hue-rotate(90deg) brightness(1.3); 
+                transform: scale(1.1); 
+            }
+        }
+        
+        @keyframes starRotate { 
+            from { transform: rotate(0deg); } 
+            to { transform: rotate(360deg); } 
+        }
+
+        /* --- Main Container --- */
+        .container {
+            z-index: 10; 
+            width: 95%; 
+            max-width: 500px;
+            margin: 20px auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Glass Card Styling --- */
+        .glass-card {
+            background: var(--glass); 
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border); 
+            border-radius: 40px;
+            padding: 30px 25px; 
+            text-align: center; 
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+            animation: glassGlow 3s infinite alternate;
+        }
+
+        @keyframes glassGlow {
+            0% { box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.1); }
+            100% { box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 40px rgba(212, 175, 55, 0.3); }
+        }
+
+        /* --- Typography --- */
+        .gold-text { 
+            background: var(--gold); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            font-family: 'Cinzel', serif; 
+            font-weight: 900; 
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 10px;
+        }
+
+        /* --- Candle & Music Controls --- */
+        .controls-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+        
+        .music-pill { 
+            background: rgba(0,0,0,0.5); 
+            padding: 8px 15px; 
+            border-radius: 30px; 
+            border: 1px solid var(--glass-border); 
+            cursor: pointer; 
+            font-size: 12px; 
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .music-pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Fixed Candle Positioning */
+        .candle-box { 
+            width: 30px; 
+            cursor: pointer; 
+            transition: transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .candle-box:hover {
+            transform: scale(1.1);
+        }
+        
+        .candle-stick { 
+            width: 22px; 
+            height: 50px; 
+            background: #fff; 
+            border-radius: 4px; 
+            position: relative; 
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            z-index: 1;
+        }
+        
+        .flame {
+            width: 18px; 
+            height: 28px; 
+            background: #ff7b00; 
+            border-radius: 50% 50% 20% 20%;
+            position: absolute; 
+            top: -35px; 
+            left: 50%; 
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px #ff4500, 0 0 40px #ff7b00;
+            animation: flicker 0.15s infinite alternate, flameFloat 3s infinite ease-in-out;
+            z-index: 2;
+        }
+        
+        .flame.off { 
+            display: none; 
+        }
+        
+        @keyframes flicker { 
+            0% { 
+                transform: translateX(-50%) scale(1); 
+                opacity: 1; 
+                box-shadow: 0 0 20px #ff4500, 0 0 40px #ff7b00;
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.05); 
+                opacity: 0.9; 
+                box-shadow: 0 0 25px #ff4500, 0 0 50px #ff7b00;
+            }
+            100% { 
+                transform: translateX(-50%) scale(0.95); 
+                opacity: 1; 
+                box-shadow: 0 0 15px #ff4500, 0 0 30px #ff7b00;
+            }
+        }
+        
+        @keyframes flameFloat {
+            0%, 100% { top: -35px; }
+            50% { top: -40px; }
+        }
+
+        /* --- Photo Album Frame --- */
+        .profile-ring { 
+            width: 180px; 
+            height: 180px; 
+            margin: 0 auto 25px; 
+            border-radius: 50%; 
+            padding: 6px; 
+            background: var(--gold); 
+            position: relative;
+            animation: rotateRing 20s linear infinite paused;
+        }
+        
+        .profile-ring.rotating {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-inner { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            overflow: hidden; 
+            border: 5px solid #050510; 
+            background: #111; 
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.7);
+        }
+        
+        #outImg { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: top center; 
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(1);
+        }
+        
+        .img-fade { 
+            opacity: 0; 
+            transform: scale(1.1) !important; 
+        }
+
+        /* --- Magic Cake Progression --- */
+        #cake-container { 
+            width: 100px; 
+            height: 100px; 
+            margin: 20px auto; 
+            position: relative;
+            transition: transform 0.5s;
+        }
+        
+        #cake-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .cake-slice {
+            position: absolute; 
+            width: 50%; 
+            height: 50%;
+            background: var(--gold); 
+            border: 1px solid rgba(0,0,0,0.2);
+            transform-origin: bottom right; 
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .s1{transform:rotate(0deg)}.s2{transform:rotate(45deg)}.s3{transform:rotate(90deg)}.s4{transform:rotate(135deg)}
+        .s5{transform:rotate(180deg)}.s6{transform:rotate(225deg)}.s7{transform:rotate(270deg)}.s8{transform:rotate(315deg)}
+        
+        .eaten { 
+            opacity: 0; 
+            transform: scale(0) rotate(90deg) !important; 
+        }
+
+        /* --- Gift Box --- */
+        #gift-box { 
+            width: 80px; 
+            height: 80px; 
+            margin: 25px auto; 
+            display: none; 
+            cursor: pointer; 
+            animation: bounce 2s infinite, glowPulse 3s infinite alternate;
+            position: relative;
+        }
+        
+        .gift-lid { 
+            height: 20px; 
+            background: #d4af37; 
+            border-radius: 6px; 
+            margin-bottom: 3px; 
+            transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gift-body { 
+            height: 55px; 
+            background: #b8860b; 
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.5);
+            position: relative;
+        }
+        
+        .gift-body::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 12px;
+            background: #d4af37;
+            border-radius: 3px;
+        }
+        
+        .gift-body::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 90%;
+            background: #d4af37;
+            border-radius: 3px;
+        }
+        
+        #gift-box.popped .gift-lid { 
+            transform: translateY(-60px) rotate(45deg); 
+            opacity: 0; 
+        }
+        
+        @keyframes bounce { 
+            0%,100%{transform:translateY(0) scale(1)} 
+            50%{transform:translateY(-15px) scale(1.05)} 
+        }
+        
+        @keyframes glowPulse {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
+        /* --- Age Display --- */
+        #outAge {
+            font-size: 70px;
+            line-height: 1;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            animation: agePulse 2s infinite alternate;
+        }
+        
+        @keyframes agePulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* --- Typing Area --- */
+        .typing-area { 
+            min-height: 100px; 
+            margin: 20px 0; 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; 
+            font-size: 18px; 
+            color: #fdf6ba; 
+            white-space: pre-wrap;
+            line-height: 1.6;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            border-left: 3px solid #d4af37;
+            animation: textGlow 3s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1); }
+            100% { box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3); }
+        }
+
+        /* --- Form Elements --- */
+        input, button {
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input { 
+            width: 100%; 
+            background: rgba(0,0,0,0.5); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 15px; 
+            padding: 14px; 
+            color: white; 
+            margin-bottom: 15px; 
+            outline: none;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn { 
+            width: 100%; 
+            padding: 16px; 
+            border-radius: 50px; 
+            border: none; 
+            cursor: pointer; 
+            font-family: 'Cinzel', serif; 
+            font-weight: 700; 
+            font-size: 16px;
+            background: var(--gold); 
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .button-group .btn {
+            flex: 1;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- Toast Notifications --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            z-index: 1000;
+            transition: transform 0.5s ease;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin: 10px auto;
+            }
+            
+            .glass-card {
+                padding: 25px 20px;
+                border-radius: 30px;
+            }
+            
+            .profile-ring {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .candle-stick {
+                width: 20px;
+                height: 45px;
+            }
+            
+            .flame {
+                width: 16px;
+                height: 25px;
+                top: -32px;
+            }
+            
+            #outAge {
+                font-size: 60px;
+            }
+            
+            .typing-area {
+                font-size: 16px;
+                min-height: 90px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 20px 15px;
+                border-radius: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .profile-ring {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .candle-stick {
+                width: 18px;
+                height: 40px;
+            }
+            
+            .flame {
+                width: 14px;
+                height: 22px;
+                top: -28px;
+            }
+            
+            #cake-container {
+                width: 80px;
+                height: 80px;
+            }
+            
+            #outAge {
+                font-size: 50px;
+            }
+            
+            .typing-area {
+                font-size: 15px;
+                min-height: 80px;
+                padding: 12px;
+            }
+        }
+
+        /* --- Hidden Elements --- */
+        #export-canvas { 
+            display: none; 
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        /* --- Progress Bar --- */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gold);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+   

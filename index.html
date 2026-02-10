@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Birthday Celebration| By Hammad Ahmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+    <div class="stars"></div>
+    <div class="bg-layer"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color: #d4af37;"></i>
+        <span id="toast-text">Message sent!</span>
+    </div>
+
+    <div class="container">
+        <!-- Setup UI -->
+        <div class="glass-card" id="setup-ui">
+            <h1 class="gold-text" style="font-size: 32px; margin-bottom: 25px;">Unique Birthday Wish</h1>
+            <p style="margin-bottom: 25px; opacity: 0.8; font-size: 15px;">⚡ Craft Your Digital Celebration — Where Code Creates Birthday Magic
+By Hammad Ahmed</p>
+            
+            <input type="text" id="inName" placeholder="Enter Name">
+            <input type="number" id="inAge" placeholder="Enter Age" min="1" max="120">
+            
+            <div class="progress-container" id="upload-progress-container">
+                <div class="progress-bar" id="upload-progress-bar"></div>
+            </div>
+            
+            <p style="font-size: 12px; margin-bottom: 10px; opacity: 0.7;">Upload up to 3 Photos for the Album:</p>
+            <div style="position: relative; margin-bottom: 20px;">
+                <input type="file" id="fileIn" accept="image/*" multiple style="padding: 12px;">
+                <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #d4af37;">
+                    <i class="fas fa-images"></i>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="launch()" id="launch-btn">
+                <span id="launch-text">Let's Celebrate 🥳</span>
+                <span id="launch-loading" class="hide"><i class="fas fa-spinner fa-spin"></i> Creating Magic...</span>
+            </button>
+            
+            <div style="margin-top: 20px; font-size: 11px; opacity: 0.6;">
+                <i class="fas fa-info-circle"></i> Click candle to blow, cake slices for wishes, gift to open
+            </div>
+        </div>
+
+        <!-- Celebration UI -->
+        <div class="glass-card hide" id="celebration-ui">
+            <div class="controls-top">
+                <div class="music-pill" id="music-control" onclick="toggleMusic()">
+                    <i class="fas fa-pause" id="music-icon"></i>
+                    <span id="music-text">PAUSE MUSIC</span>
+                </div>
+                <div class="candle-box" onclick="blowCandle()">
+                    <div class="flame" id="flame"></div>
+                    <div class="candle-stick"></div>
+                </div>
+            </div>
+
+            <div class="profile-ring" id="profile-ring">
+                <div class="profile-inner">
+                    <img src="" id="outImg" alt="Birthday Person">
+                </div>
+            </div>
+
+            <div id="cake-container">
+                <div class="cake-slice s1"></div>
+                <div class="cake-slice s2"></div>
+                <div class="cake-slice s3"></div>
+                <div class="cake-slice s4"></div>
+                <div class="cake-slice s5"></div>
+                <div class="cake-slice s6"></div>
+                <div class="cake-slice s7"></div>
+                <div class="cake-slice s8"></div>
+            </div>
+
+            <div id="gift-box" onclick="openGift()">
+                <div class="gift-lid"></div>
+                <div class="gift-body"></div>
+            </div>
+            
+            <h2 class="gold-text" id="outAge" style="font-size: 70px; line-height: 1;">0</h2>
+            <p style="letter-spacing: 5px; font-size: 11px; opacity: 0.6; margin-bottom: 15px;">YEARS RADIANT</p>
+
+            <h3 style="margin-top: 10px; font-size: 24px;">Happy Birthday, <br><span class="gold-text" id="outName"></span></h3>
+            
+            <div class="typing-area">
+                <p id="msg-text"></p>
+            </div>
+
+            <div class="button-group">
+                <button class="btn secondary-btn" onclick="newWish()">
+                    <i class="fas fa-star"></i> New Wish
+                </button>
+                <button class="btn" onclick="exportHD()">
+                    <i class="fas fa-download"></i> Download Memory
+                </button>
+            </div>
+            
+            <div style="margin-top: 25px; display: flex; justify-content: center; gap: 20px;">
+                <div style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" onclick="resetExperience()">
+                    <i class="fas fa-redo"></i> <span style="font-size: 12px;">Reset</span>
+                </div>
+                <div style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" onclick="shareExperience()">
+                    <i class="fas fa-share-alt"></i> <span style="font-size: 12px;">Share</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="export-canvas" width="1080" height="1920"></canvas>
+
+    <!-- Audio Elements -->
+    <audio id="bg-music" loop preload="auto">
+        <!-- Using your local bg-music.mp3 file -->
+        <source src="bg-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Party Popper Sound Effect -->
+    <audio id="pop-sound" preload="auto">
+        <source src="pop.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="candle-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-candle-blow-738.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="confetti-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="gift-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="click-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+   
+    <script src="script.js"></script>
+</body>
+</html>
